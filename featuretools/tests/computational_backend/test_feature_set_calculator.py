@@ -375,7 +375,7 @@ def test_make_agg_feat_where_count_and_device_type_feat(es):
 
     name = feat.get_name()
     instances = df[name]
-    assert (instances[0] == 1)
+    assert (instances.loc[0] == 1)
 
 
 def test_make_agg_feat_where_count_or_device_type_feat(es):
@@ -403,7 +403,7 @@ def test_make_agg_feat_where_count_or_device_type_feat(es):
 
     name = feat.get_name()
     instances = df[name]
-    assert (instances[0] == 3)
+    assert (instances.loc[0] == 3)
 
 
 def test_make_agg_feat_of_agg_feat(es):
@@ -811,7 +811,7 @@ def test_empty_child_dataframe(parent_child):
         features = [count, count_where, trend, trend_where, n_most_common, n_most_common_where]
         names = [count.get_name(), count_where.get_name(),
                  trend.get_name(), trend_where.get_name(),
-                 *n_most_common.get_names(), *n_most_common_where.get_names()]
+                 *n_most_common.get_feature_names(), *n_most_common_where.get_feature_names()]
         values = [0, 0,
                   np.nan, np.nan,
                   *np.full(n_most_common.number_output_features, np.nan), *np.full(n_most_common_where.number_output_features, np.nan)]
@@ -831,7 +831,7 @@ def test_empty_child_dataframe(parent_child):
         values = [0]
     else:
         features = [count_where, trend_where, n_most_common_where]
-        names = [count_where.get_name(), trend_where.get_name(), *n_most_common_where.get_names()]
+        names = [count_where.get_name(), trend_where.get_name(), *n_most_common_where.get_feature_names()]
         values = [0, np.nan, *np.full(n_most_common_where.number_output_features, np.nan)]
 
     fm2 = ft.calculate_feature_matrix(entityset=es,
